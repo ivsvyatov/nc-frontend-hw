@@ -81,14 +81,14 @@ class LinkedList {
     }
 
     contains(value) {
+        let flag = false;
         for (let i = 0; i < list.length - 1; i++) {
             if (value === this.get(i).value) {
-                console.log('true');
-                break;
-            } else {
-                console.log('false');
+                flag = true;
+                console.log(flag);
             }
         }
+        console.log(flag);
     }
 
     toString() {
