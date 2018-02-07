@@ -1,7 +1,20 @@
+class Node {
+    constructor(value) {
+        this.next = null;
+        this.value = value;
+    }
+
+}
+
 class LinkedList {
 
     constructor() {
-        this.head = null;
+        let node = new Node(arguments[0]);
+        this.head = node;
+        for(let i = 1; i<arguments.length;i++){
+            node.next = new Node(arguments[i]);
+            node = node.next;
+        }
         this.length = 0;
     }
 
@@ -14,11 +27,8 @@ class LinkedList {
         return current;
     }
 
-    set(value, position) {
-        const node = {
-            value: value,
-            next: null
-        };
+    set(position, value) {
+        const node = new Node(value);
         if (position === 0) {
             node.next = null;
             this.head = node;
@@ -34,12 +44,8 @@ class LinkedList {
 
     push() {
         for (let i = 0; i < arguments.length; i++) {
-            const node = {
-                value: arguments[i],
-                next: null,
-            };
-            var current = this.head;
-
+            const node = new Node(arguments[i]);
+            let current = this.head;
 
             if (!current) {
                 this.head = node;
@@ -57,10 +63,7 @@ class LinkedList {
 
     unshift() {
         for (let i = 0; i < arguments.length; i++) {
-            const node = {
-                value: arguments[i],
-                next: null,
-            };
+            const node = new Node(arguments[i]);
             node.next = this.head;
             this.head = node;
             this.length++;
@@ -78,7 +81,6 @@ class LinkedList {
     }
 
     contains(value) {
-        let flag = false;
         for (let i = 0; i < list.length - 1; i++) {
             if (value === this.get(i).value) {
                 console.log('true');
@@ -90,31 +92,45 @@ class LinkedList {
     }
 
     toString() {
-        for (let i = 0; i < list.length - 1; i++) {
-            console.log("Value :" + this.get(i).value + ", next: " + this.get(i).next);
+        let current = this.head;
+        while (current){
+            console.log(current.value);
+            current = current.next
         }
     }
-
+    clear(){
+        this.head = null;
+        this.length = null;
+    }
     reverse() {
+        let current = this.head;
+        list.clear();
+        while (current){
+            list.unshift(current.value);
+            current = current.next;
+        }
     }
 }
 
 
 const list = new LinkedList();
-list.set(1, 0);
-list.set(23, 1);
-list.set(44, 2);
-list.set('dsfs', 3);
+list.set(0, 1);
+list.set(1, 23);
+list.set(2, 44);
+list.set(3, 'dsfs');
 list.push('dsfs');
 list.unshift(1000, 2000);
 
-list.pop();
-list.shift();
-list.contains(4);
+//list.pop();
+//list.shift();
+//list.contains(4);
 list.toString();
 list.reverse();
 list.toString();
+
+
+
 // loop on list
-for (let i = 0; i < list.length; i++) {
+/*for (let i = 0; i < list.length; i++) {
     console.log(list.get(i));
-}
+}*/
