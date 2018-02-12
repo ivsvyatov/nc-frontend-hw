@@ -1,5 +1,9 @@
+'use strict';
+
+
 class Node {
     constructor(value) {
+
         this.next = null;
         this.value = value;
     }
@@ -18,6 +22,8 @@ class LinkedList {
             node = node.next;
             this.length++;
         }
+
+
     }
 
 
@@ -122,51 +128,93 @@ class LinkedList {
         return console.log(array);
     }
 
-    clear() {
+    clean() {
         this.head = null;
         this.length = null;
     }
 
     reverse() {
         let current = this.head;
-        list.clear();
+        list.clean();
         while (current) {
             list.unshift(current.value);
             current = current.next;
         }
         return list;
     }
+    getLastItem(){
+        let current = this.head;
+        let prev;
+        while (current) {
+            prev = current;
+            current = current.next;
+        }
+        return prev;
+    }
+    getFistItem(){
+        return this.head;
+    }
 }
 
 
-const list = new LinkedList(1, 23, 44, 'dsfs', {});
+let list =  new LinkedList(1, 23, 44, 'dsfs', {}) ;
+
+
+list.from = list.getFistItem();
+list.to = list.getLastItem();
+list[Symbol.iterator] = function() {
+
+    let current = this.from;
+    return {
+        next(){
+            if (current) {
+                let item = current;
+                current = current.next;
+                return {
+                    done: false,
+                    value: item.value
+                }
+            } else {
+                return {
+                    done: true
+                };
+            }
+        }
+
+    }
+};
+
+for (let i of list) {
+    console.log(i);
+}
+
 
 //___________GET_____________
-list.get(3);
+//list.get(3);
 
 //___________SET_____________
-list.set(4,10000);
+//list.set(4,10000);
 
 //___________PUSH_____________
-list.push(2000, 'push');
+//list.push(2000, 'push');
 
 //__________UNSHIFT___________
-list.unshift(10, 667);
+//list.unshift(10, 667);
 
 //___________POP_____________
-list.pop();
+//list.pop();
 
 //___________SHIFT____________
-list.shift();
+//list.shift();
 
 //__________CONTAINS__________
-list.contains(1);
+//list.contains(1);
 
-//__________CONTAINS__________
-list.reverse();
+//__________REVERSE__________
+//list.reverse();
 
 
-list.toString();
+//list.toString();
 
 
 //console.log(list.length);
@@ -174,3 +222,5 @@ list.toString();
 /*for (let i = 0; i < list.length; i++) {
     console.log(list.get(i));
 }*/
+
+
