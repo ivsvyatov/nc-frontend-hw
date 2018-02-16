@@ -2,6 +2,7 @@
 
 
 class Node {
+
     constructor(value) {
 
         this.next = null;
@@ -73,7 +74,7 @@ class LinkedList {
     }
 
     unshift() {
-        for (let i = arguments.length-1; i >= 0; i--) {
+        for (let i = arguments.length - 1; i >= 0; i--) {
             const node = new Node(arguments[i]);
             node.next = this.head;
             this.head = node;
@@ -119,13 +120,30 @@ class LinkedList {
     }
 
     toString() {
-        let array = [];
+        let string = '';
         let current = this.head;
-        while (current) {
-            array.push(current.value);
-            current = current.next;
+        string = string + '[';
+        while (current.next) {
+            if (typeof current === string) {
+                string = string + '\"' + current.value + '\"' + ', ';
+                current = current.next;
+            } else if (typeof current === "object") {
+                string = string + JSON.stringify(current.value) + ', ';
+                current = current.next;
+            } else {
+                string = string + current.value + ', ';
+                current = current.next;
+            }
+
         }
-        return console.log(array);
+        if (typeof current === string) {
+            string = string + ' \" ' + current.value + '\"' + ']';
+        } else if (typeof current === "object") {
+            string = string + JSON.stringify(current.value) + ']';
+        } else {
+            string = string + current.value + ']';
+        }
+        return string;
     }
 
     clean() {
@@ -135,14 +153,15 @@ class LinkedList {
 
     reverse() {
         let current = this.head;
-        list.clean();
+        this.clean();
         while (current) {
-            list.unshift(current.value);
+            this.unshift(current.value);
             current = current.next;
         }
-        return list;
+        return this;
     }
-    getLastItem(){
+
+    getLastItem() {
         let current = this.head;
         let prev;
         while (current) {
@@ -151,22 +170,27 @@ class LinkedList {
         }
         return prev;
     }
-    getFistItem(){
+
+    getFistItem() {
         return this.head;
+    }
+
+    sort() {
+
     }
 }
 
 
-let list =  new LinkedList(1, 23, 44, 'dsfs', {}) ;
+let list = new LinkedList(1, 23, 44, 'dsfs', {});
 
 
 list.from = list.getFistItem();
 list.to = list.getLastItem();
-list[Symbol.iterator] = function() {
+list[Symbol.iterator] = function () {
 
     let current = this.from;
     return {
-        next(){
+        next() {
             if (current) {
                 let item = current;
                 current = current.next;
@@ -184,9 +208,9 @@ list[Symbol.iterator] = function() {
     }
 };
 
-for (let i of list) {
+/*for (let i of list) {
     console.log(i);
-}
+}*/
 
 
 //___________GET_____________
@@ -211,10 +235,10 @@ for (let i of list) {
 //list.contains(1);
 
 //__________REVERSE__________
-//list.reverse();
+list.reverse();
 
 
-//list.toString();
+console.log(list.toString());
 
 
 //console.log(list.length);
