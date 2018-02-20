@@ -2,9 +2,7 @@
 
 
 class Node {
-
     constructor(value) {
-
         this.next = null;
         this.value = value;
     }
@@ -12,18 +10,19 @@ class Node {
 }
 
 class LinkedList {
-
     constructor() {
         this.length = 0;
-        let node = new Node(arguments[0]);
-        this.length++;
-        this.head = node;
-        for (let i = 1; i < arguments.length; i++) {
-            node.next = new Node(arguments[i]);
-            node = node.next;
+        this.head = null;
+        if (arguments[0]) {
+            let node = new Node(arguments[0]);
             this.length++;
+            this.head = node;
+            for (let i = 1; i < arguments.length; i++) {
+                node.next = new Node(arguments[i]);
+                node = node.next;
+                this.length++;
+            }
         }
-
 
     }
 
@@ -67,9 +66,10 @@ class LinkedList {
                     current = current.next;
                 }
                 current.next = node;
+                this.length++;
             }
 
-            this.length++;
+
         }
     }
 
@@ -174,14 +174,65 @@ class LinkedList {
     getFistItem() {
         return this.head;
     }
-
-    sort() {
-
-    }
 }
 
 
-let list = new LinkedList(1, 23, 44, 'dsfs', {});
+let sort = function mergeSort(list) {
+    let leftList = new LinkedList();
+    let rightList = new LinkedList();
+    let left = new LinkedList();
+    let right = new LinkedList();
+
+    if (list.head.next === null) {
+        return list;
+    } else {
+        let current = list.head;
+        let lengthList = list.length / 2;
+        for (let i = 0; i < list.length; i++) {
+            if (i < lengthList) {
+                leftList.push(current.value);
+                current = current.next;
+            } else {
+                rightList.push(current.value);
+                current = current.next;
+            }
+        }
+        left = mergeSort(leftList);
+        right = mergeSort(rightList);
+
+    }
+    return merge(left, right);
+};
+
+function merge(left, right) {
+    let result = new LinkedList();
+    while (left.length > 0 && right.length > 0) {
+        if (left.head.value <= right.head.value) {
+            result.push(left.head.value);
+            left.shift();
+        } else {
+            result.push(right.head.value);
+            right.shift();
+        }
+    }
+    if (left.length > 0) {
+        let current = left.head;
+        while (current) {
+            result.push(current.value);
+            current = current.next;
+        }
+    }
+    if (right.length > 0) {
+        let current = right.head;
+        while (current) {
+            result.push(current.value);
+            current = current.next;
+        }
+    }
+    return result;
+}
+
+const list = new LinkedList(1, 23, 44, 'dsfs', {});
 
 
 list.from = list.getFistItem();
@@ -235,13 +286,13 @@ list[Symbol.iterator] = function () {
 //list.contains(1);
 
 //__________REVERSE__________
-list.reverse();
+//list.reverse();
 
 
-console.log(list.toString());
+console.log(sort(list).toString());
+//console.log(list.toString());
 
 
-//console.log(list.length);
 // loop on list
 /*for (let i = 0; i < list.length; i++) {
     console.log(list.get(i));
