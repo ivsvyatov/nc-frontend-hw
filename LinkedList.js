@@ -125,13 +125,13 @@ class LinkedList {
         string = string + '[';
         while (current.next) {
             if (typeof current === string) {
-                string = string + '\"' + current.value + '\"' + ', ';
+                string = string + '\"' + current.value + '\"' + ',';
                 current = current.next;
             } else if (typeof current === "object") {
-                string = string + JSON.stringify(current.value) + ', ';
+                string = string + JSON.stringify(current.value) + ',';
                 current = current.next;
             } else {
-                string = string + current.value + ', ';
+                string = string + current.value + ',';
                 current = current.next;
             }
 
@@ -286,11 +286,11 @@ list[Symbol.iterator] = function () {
 //list.contains(1);
 
 //__________REVERSE__________
-//list.reverse();
+list.reverse();
 
 
-console.log(sort(list).toString());
-//console.log(list.toString());
+//console.log(sort(list).toString());
+console.log(list.toString());
 
 
 // loop on list
