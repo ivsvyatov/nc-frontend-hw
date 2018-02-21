@@ -13,6 +13,7 @@ class LinkedList {
     constructor() {
         this.length = 0;
         this.head = null;
+        this.tail = null;
         if (arguments[0]) {
             let node = new Node(arguments[0]);
             this.length++;
@@ -20,6 +21,7 @@ class LinkedList {
             for (let i = 1; i < arguments.length; i++) {
                 node.next = new Node(arguments[i]);
                 node = node.next;
+                this.tail = node;
                 this.length++;
             }
         }
@@ -153,6 +155,7 @@ class LinkedList {
 
     reverse() {
         let current = this.head;
+        this.tail = current;
         this.clean();
         while (current) {
             this.unshift(current.value);
@@ -258,7 +261,7 @@ list[Symbol.iterator] = function () {
 
     }
 };
-
+console.log(list.tail);
 /*for (let i of list) {
     console.log(i);
 }*/
@@ -291,6 +294,7 @@ list.reverse();
 
 //console.log(sort(list).toString());
 console.log(list.toString());
+console.log(list.tail.value);
 
 
 // loop on list
